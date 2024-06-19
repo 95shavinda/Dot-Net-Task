@@ -61,6 +61,7 @@ namespace USerFormSubmission.BusinessServices.Services
             existingApplicant.IdNumber = applicantDto.IdNumber;
             existingApplicant.DateOfBirth = applicantDto.DateOfBirth;
             existingApplicant.Gender = applicantDto.Gender;
+            
 
             return existingApplicant;
         }

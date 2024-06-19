@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("UserFormSubmittion.DataService")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a9a7245adaf9171b813beea82688bdf667d1df0a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e7219b5a19f452459bf185da8efe8cfad1c4086f")]
 [assembly: System.Reflection.AssemblyProductAttribute("UserFormSubmittion.DataService")]
 [assembly: System.Reflection.AssemblyTitleAttribute("UserFormSubmittion.DataService")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

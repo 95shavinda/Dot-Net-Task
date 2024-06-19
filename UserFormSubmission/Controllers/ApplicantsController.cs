@@ -5,7 +5,7 @@ using USerFormSubmission.BusinessServices.Interfaces;
 namespace UserFormSubmission.Controllers
 {
     [ApiController]
-    [Route("api/applicants")]
+    [Route("api/applicants/[action]")]
     public class ApplicantsController : ControllerBase
     {
         private readonly IApplicantService _applicantService;

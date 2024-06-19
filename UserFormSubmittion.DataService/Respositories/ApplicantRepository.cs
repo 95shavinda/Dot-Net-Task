@@ -25,9 +25,9 @@ namespace UserFormSubmittion.DataService.Respositories
             return applicant.Id; // return the generated ID
         }
 
-        public async Task UpdateAsync(Applicant applicant)
+        public async Task UpdateAsync(Applicant User)
         {
-            _context.Applicants.Update(applicant);
+            _context.Applicants.Update(User);
             await _context.SaveChangesAsync();
         }
 
@@ -38,10 +38,10 @@ namespace UserFormSubmittion.DataService.Respositories
 
         public async Task DeleteAsync(int id)
         {
-            var applicant = await _context.Applicants.FindAsync(id);
-            if (applicant != null)
+            var User = await _context.Applicants.FindAsync(id);
+            if (User != null)
             {
-                _context.Applicants.Remove(applicant);
+                _context.Applicants.Remove(User);
                 await _context.SaveChangesAsync();
             }
         }
