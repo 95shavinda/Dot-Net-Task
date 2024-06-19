@@ -2,68 +2,80 @@ using Microsoft.AspNetCore.Mvc;
 using UserFormSubmission.DTO;
 using USerFormSubmission.BusinessServices.Interfaces;
 
-namespace UserFormSubmission.Controllers
+namespace UserFormSubmission.Controllers;
+
+[ApiController]
+[Route("api/questions/[action]")]
+public class QuestionsController : ControllerBase
 {
-    [ApiController]
-    [Route("api/questions")]
-    public class QuestionsController : ControllerBase
+    private readonly IQuestionService _questionService;
+
+    public QuestionsController(IQuestionService questionService)
     {
-        private readonly IQuestionService _questionService;
+        _questionService = questionService;
+    }
 
-        public QuestionsController(IQuestionService questionService)
+    // POST api/questions
+    [HttpPost]
+    public async Task<IActionResult> CreateQuestion([FromBody] QuestionDto questionDto)
+    {
+        if (!ModelState.IsValid)
         {
-            _questionService = questionService;
+            return BadRequest(ModelState);
         }
 
-        // POST api/questions
-        [HttpPost]
-        public async Task<IActionResult> CreateQuestion([FromBody] QuestionDto questionDto)
+        await _questionService.CreateQuestionAsync(questionDto);
+
+        return NoContent();
+    }
+
+    // PUT api/questions/{id}
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateQuestion(int id, [FromBody] QuestionDto questionDto)
+    {
+        if (!ModelState.IsValid)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var questionId = await _questionService.CreateQuestionAsync(questionDto);
-
-            return CreatedAtAction(nameof(GetQuestionById), new { id = questionId }, null);
+            return BadRequest(ModelState);
         }
 
-        // PUT api/questions/{id}
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateQuestion(int id, [FromBody] QuestionDto questionDto)
+        await _questionService.UpdateQuestionAsync(id, questionDto);
+
+        return NoContent();
+    }
+
+    // GET api/questions/{id}
+    [HttpGet("type/{type}")]
+    public async Task<IActionResult> GetQuestionByQuestionType(int type)
+    {
+        var questionDto = await _questionService.GetQuestionByIdAsync(type);
+
+        if (questionDto == null)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            await _questionService.UpdateQuestionAsync(id, questionDto);
-
-            return NoContent();
+            return NotFound();
         }
 
-        // GET api/questions/{id}
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetQuestionById(int id)
+        return Ok(questionDto);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetQuestionById(int id)
+    {
+        var questionDto = await _questionService.GetQuestionByIdAsync(id);
+
+        if (questionDto == null)
         {
-            var questionDto = await _questionService.GetQuestionByIdAsync(id);
-
-            if (questionDto == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(questionDto);
+            return NotFound();
         }
 
-        // DELETE api/questions/{id}
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteQuestion(int id)
-        {
-            await _questionService.DeleteQuestionAsync(id);
+        return Ok(questionDto);
+    }
 
-            return NoContent();
-        }
+    // DELETE api/questions/{id}
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteQuestion(int id)
+    {
+        await _questionService.DeleteQuestionAsync(id);
+
+        return NoContent();
     }
 }

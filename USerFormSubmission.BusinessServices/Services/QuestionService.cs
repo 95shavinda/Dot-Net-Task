@@ -7,6 +7,7 @@ using USerFormSubmission.BusinessServices.Interfaces;
 using UserFormSubmission.DTO;
 using UserFormSubmission.Models;
 using UserFormSubmittion.DataService.Interfaces;
+using UserFormSubmission.Enum;
 
 namespace USerFormSubmission.BusinessServices.Services
 {
@@ -38,10 +39,10 @@ namespace USerFormSubmission.BusinessServices.Services
             await _questionRepository.UpdateAsync(existingQuestion);
         }
 
-        public async Task<QuestionDto> GetQuestionByIdAsync(int id)
+        public async Task<IEnumerable<QuestionDto>> GetQuestionByQuestionTypeAsync(QuestionType type)
         {
-            var question = await _questionRepository.GetByIdAsync(id);
-            return MapToQuestionDto(question);
+            var questions = await _questionRepository.GetByQuestionTypeAsync(type);
+            return questions.Select(MapToQuestionDto);
         }
 
         public async Task DeleteQuestionAsync(int id)
@@ -56,9 +57,9 @@ namespace USerFormSubmission.BusinessServices.Services
                 existingQuestion = new Question();
             }
 
+            existingQuestion.UserId = questionDto.UserId;
             existingQuestion.QuestionText = questionDto.QuestionText;
             existingQuestion.Type = questionDto.Type;
-            existingQuestion.Options = questionDto.Options;
 
             return existingQuestion;
         }
@@ -69,8 +70,14 @@ namespace USerFormSubmission.BusinessServices.Services
             {
                 QuestionText = question.QuestionText,
                 Type = question.Type,
-                Options = question.Options
+                UserId = question.UserId
             };
+        }
+
+        public async Task<QuestionDto> GetQuestionByIdAsync(int id)
+        {
+            var questions = await _questionRepository.GetByIdAsync(id);
+            return MapToQuestionDto(questions);
         }
     }
 }

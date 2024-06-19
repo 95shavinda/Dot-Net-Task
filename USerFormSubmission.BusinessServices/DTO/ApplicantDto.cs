@@ -1,4 +1,7 @@
-﻿namespace UserFormSubmission.DTO
+﻿using UserFormSubmission.DTO;
+using UserFormSubmission.Models;
+
+namespace UserFormSubmission.BusinessServices.DTO
 {
     public class ApplicantDto
     {
@@ -12,6 +15,6 @@
         public string IdNumber { get; set; } = string.Empty;
         public DateTime DateOfBirth { get; set; }
         public string Gender { get; set; } = string.Empty;
-        public List<QuestionDto> Questions { get; set; }
+        public ICollection<QuestionDto> Questions { get; set; } = new List<QuestionDto>();
     }
 }

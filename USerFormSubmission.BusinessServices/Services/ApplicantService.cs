@@ -1,4 +1,4 @@
-﻿using UserFormSubmission.DTO;
+﻿using UserFormSubmission.BusinessServices.DTO;
 using UserFormSubmission.Models;
 using USerFormSubmission.BusinessServices.Interfaces;
 using UserFormSubmittion.DataService.Interfaces;
@@ -61,7 +61,6 @@ namespace USerFormSubmission.BusinessServices.Services
             existingApplicant.IdNumber = applicantDto.IdNumber;
             existingApplicant.DateOfBirth = applicantDto.DateOfBirth;
             existingApplicant.Gender = applicantDto.Gender;
-            
 
             return existingApplicant;
         }
@@ -80,6 +79,7 @@ namespace USerFormSubmission.BusinessServices.Services
                 IdNumber = applicant.IdNumber,
                 DateOfBirth = applicant.DateOfBirth,
                 Gender = applicant.Gender
+                //Questions = new Question
             };
         }
     }

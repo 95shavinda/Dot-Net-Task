@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using UserFormSubmission.BusinessServices.DTO;
 using UserFormSubmission.DTO;
 using USerFormSubmission.BusinessServices.Interfaces;
 
@@ -9,24 +10,32 @@ namespace UserFormSubmission.Controllers
     public class ApplicantsController : ControllerBase
     {
         private readonly IApplicantService _applicantService;
+        private readonly IQuestionService _questionService;
 
-        public ApplicantsController(IApplicantService applicantService)
+        public ApplicantsController(IApplicantService applicantService, IQuestionService questionService)
         {
             _applicantService = applicantService;
+            _questionService = questionService;
         }
 
         // POST api/applicants
         [HttpPost]
-        public async Task<IActionResult> CreateApplicant([FromBody] ApplicantDto applicantDto)
+        public async Task<IActionResult> CreateApplicant([FromBody] UserProfileWithQuestionsDto applicantDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var applicantId = await _applicantService.CreateApplicantAsync(applicantDto);
+            var applicantId = await _applicantService.CreateApplicantAsync(applicantDto.UserProfile);
 
-            return CreatedAtAction(nameof(GetApplicantById), new { id = applicantId }, null);
+            foreach (var question in applicantDto.Questions)
+            {
+                question.UserId = applicantId;
+                await _questionService.CreateQuestionAsync(question);
+            }
+
+            return await GetApplicantById(applicantId);
         }
 
         // PUT api/applicants/{id}

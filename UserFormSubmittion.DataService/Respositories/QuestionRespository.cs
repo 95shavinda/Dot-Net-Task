@@ -1,4 +1,6 @@
-﻿using UserFormSubmission.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using UserFormSubmission.Enum;
+using UserFormSubmission.Models;
 using UserFormSubmittion.DataService.Data;
 using UserFormSubmittion.DataService.Interfaces;
 
@@ -26,9 +28,9 @@ namespace UserFormSubmittion.DataService.Respositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Question> GetByIdAsync(int id)
+        public async Task<IEnumerable<Question>> GetByQuestionTypeAsync(QuestionType type)
         {
-            return await _context.Questions.FindAsync(id);
+            return await _context.Questions.Where(x => x.Type == type).ToListAsync();
         }
 
         public async Task DeleteAsync(int id)
@@ -39,6 +41,16 @@ namespace UserFormSubmittion.DataService.Respositories
                 _context.Questions.Remove(question);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<Question> GetByIdAsync(int id)
+        {
+            return await _context.Questions.FindAsync(id);
+        }
+
+        public async Task<IEnumerable<Question>> GetByUserIdAsync(int userId)
+        {
+            return await _context.Questions.Where(x => x.UserId == userId).ToListAsync();
         }
     }
 }
