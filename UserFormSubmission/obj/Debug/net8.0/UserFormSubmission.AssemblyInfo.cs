@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("UserFormSubmission")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e95206cdfc1182e6cf6f4c554cc6d7a0111303a3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a9a7245adaf9171b813beea82688bdf667d1df0a")]
 [assembly: System.Reflection.AssemblyProductAttribute("UserFormSubmission")]
 [assembly: System.Reflection.AssemblyTitleAttribute("UserFormSubmission")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

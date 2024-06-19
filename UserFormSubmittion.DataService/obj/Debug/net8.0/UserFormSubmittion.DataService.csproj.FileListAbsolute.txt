@@ -16,3 +16,5 @@ D:\Dot-Net-Task\UserFormSubmittion.DataService\obj\Debug\net8.0\UserFormSubmitti
 D:\Dot-Net-Task\UserFormSubmittion.DataService\obj\Debug\net8.0\refint\UserFormSubmittion.DataService.dll
 D:\Dot-Net-Task\UserFormSubmittion.DataService\obj\Debug\net8.0\UserFormSubmittion.DataService.pdb
 D:\Dot-Net-Task\UserFormSubmittion.DataService\obj\Debug\net8.0\ref\UserFormSubmittion.DataService.dll
+D:\Dot-Net-Task\UserFormSubmittion.DataService\bin\Debug\net8.0\UserFormSubmittion.DataService.runtimeconfig.json
+D:\Dot-Net-Task\UserFormSubmittion.DataService\obj\Debug\net8.0\UserFormSubmittion.DataService.genruntimeconfig.cache
