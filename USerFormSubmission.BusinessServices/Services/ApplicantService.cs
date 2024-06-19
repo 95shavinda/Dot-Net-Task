@@ -1,32 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UserFormSubmission.DTO;
+﻿using UserFormSubmission.DTO;
 using UserFormSubmission.Models;
 using USerFormSubmission.BusinessServices.Interfaces;
+using UserFormSubmittion.DataService.Interfaces;
 
 namespace USerFormSubmission.BusinessServices.Services
 {
     public class ApplicantService : IApplicantService
     {
-        private readonly IApplicantBusinessService _applicantBusinessService;
+        private readonly IApplicantRepository _applicantRepository;
 
-        public ApplicantService(IApplicantBusinessService applicantBusinessService)
+        public ApplicantService(IApplicantRepository applicantRepository)
         {
-            _applicantBusinessService = applicantBusinessService;
+            _applicantRepository = applicantRepository;
         }
 
         public async Task<int> CreateApplicantAsync(ApplicantDto applicantDto)
         {
             var applicant = MapToApplicant(applicantDto);
-            return await _applicantBusinessService.AddAsync(applicant);
+            return await _applicantRepository.AddAsync(applicant);
         }
 
         public async Task UpdateApplicantAsync(int id, ApplicantDto applicantDto)
         {
-            var existingApplicant = await _applicantBusinessService.GetByIdAsync(id);
+            var existingApplicant = await _applicantRepository.GetByIdAsync(id);
             if (existingApplicant == null)
             {
                 throw new ArgumentException($"Applicant with ID {id} not found.");
@@ -34,18 +30,18 @@ namespace USerFormSubmission.BusinessServices.Services
 
             MapToApplicant(applicantDto, existingApplicant);
 
-            await _applicantBusinessService.UpdateAsync(existingApplicant);
+            await _applicantRepository.UpdateAsync(existingApplicant);
         }
 
         public async Task<ApplicantDto> GetApplicantByIdAsync(int id)
         {
-            var applicant = await _applicantBusinessService.GetByIdAsync(id);
+            var applicant = await _applicantRepository.GetByIdAsync(id);
             return MapToApplicantDto(applicant);
         }
 
         public async Task DeleteApplicantAsync(int id)
         {
-            await _applicantBusinessService.DeleteAsync(id);
+            await _applicantRepository.DeleteAsync(id);
         }
 
         private Applicant MapToApplicant(ApplicantDto applicantDto, Applicant existingApplicant = null)

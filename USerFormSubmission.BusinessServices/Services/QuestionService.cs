@@ -6,27 +6,28 @@ using System.Threading.Tasks;
 using USerFormSubmission.BusinessServices.Interfaces;
 using UserFormSubmission.DTO;
 using UserFormSubmission.Models;
+using UserFormSubmittion.DataService.Interfaces;
 
 namespace USerFormSubmission.BusinessServices.Services
 {
     public class QuestionService : IQuestionService
     {
-        private readonly IQuestionBusinessService _questionBusinessService;
+        private readonly IQuestionRepository _questionRepository;
 
-        public QuestionService(IQuestionBusinessService questionBusinessService)
+        public QuestionService(IQuestionRepository questionRepository)
         {
-            _questionBusinessService = questionBusinessService;
+            _questionRepository = questionRepository;
         }
 
         public async Task<int> CreateQuestionAsync(QuestionDto questionDto)
         {
             var question = MapToQuestion(questionDto);
-            return await _questionBusinessService.AddAsync(question);
+            return await _questionRepository.AddAsync(question);
         }
 
         public async Task UpdateQuestionAsync(int id, QuestionDto questionDto)
         {
-            var existingQuestion = await _questionBusinessService.GetByIdAsync(id);
+            var existingQuestion = await _questionRepository.GetByIdAsync(id);
             if (existingQuestion == null)
             {
                 throw new ArgumentException($"Question with ID {id} not found.");
@@ -34,18 +35,18 @@ namespace USerFormSubmission.BusinessServices.Services
 
             MapToQuestion(questionDto, existingQuestion);
 
-            await _questionBusinessService.UpdateAsync(existingQuestion);
+            await _questionRepository.UpdateAsync(existingQuestion);
         }
 
         public async Task<QuestionDto> GetQuestionByIdAsync(int id)
         {
-            var question = await _questionBusinessService.GetByIdAsync(id);
+            var question = await _questionRepository.GetByIdAsync(id);
             return MapToQuestionDto(question);
         }
 
         public async Task DeleteQuestionAsync(int id)
         {
-            await _questionBusinessService.DeleteAsync(id);
+            await _questionRepository.DeleteAsync(id);
         }
 
         private Question MapToQuestion(QuestionDto questionDto, Question existingQuestion = null)
